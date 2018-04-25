@@ -1,76 +1,138 @@
 package com.example.model;
 
+import java.util.List;
+
 /**
  * @author garden
- * @create 4/15/18
+ * @create 4/23/18
  */
-import com.easypost.EasyPost;
-import com.easypost.exception.EasyPostException;
-import com.easypost.model.*;
-import com.example.configure.CredentialHelper;
-
-import java.util.HashMap;
-import java.util.Map;
-
 public class EasyTracker {
-    public EasyTracker(){
-        EasyPost.apiKey= CredentialHelper.getCredentialHelper().getEasypostApiKey();
+    private String trackerId;
+    private String trackingCode;
+    private String upToDateStatus;
+    private String estDeliveryDate;
+    private String updateAt;
+    private String carrier;
+    private List<EasyTrackingDetail> easyTrackingDetails;
+
+    private EasyTracker(EasyTrackerBuilder builder){
+        this.trackerId = builder.trackerId;
+        this.trackingCode = builder.trackingCode;
+        this.upToDateStatus = builder.upToDateStatus;
+        this.estDeliveryDate = builder.estDeliveryDate;
+        this.updateAt = builder.updateAt;
+        this.carrier = builder.carrier;
+        this.easyTrackingDetails = builder.easyTrackingDetails;
     }
-    public void createTracker(){
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("tracking_code", "EZ3000000003");
-        params.put("carrier","FedEx");
-        Tracker tracker = null;
-        try {
-            tracker = Tracker.create(params);
-        } catch (EasyPostException e) {
-            e.printStackTrace();
-        }
-        System.out.println(tracker.getStatus());
-        System.out.println(tracker.getCarrierDetail().getService());
-        System.out.println(tracker.getEstDeliveryDate().toString());
-        System.out.println(tracker.getUpdateAt());
-        for(TrackingDetail detail: tracker.getTrackingDetails()){
-            System.out.println(detail.getMessage());
-            System.out.println(detail.getStatusDetail());
-            System.out.println(detail.getDatetime().toString());
-            System.out.println(detail.getTrackingLocation().getCity());
-            System.out.println(detail.getTrackingLocation().getState());
-            System.out.println(detail.getTrackingLocation().getCountry());
-            System.out.println(detail.getTrackingLocation().getZip());
-            System.out.println("-----------------------");
-        }
+
+
+    public static EasyTrackerBuilder builder(){
+        return new EasyTrackerBuilder();
     }
-    public void listWebhookCollectionUrl(){
-        WebhookCollection webhookCollection = null;
-        try {
-            webhookCollection = Webhook.all();
-            for(Webhook webhook : webhookCollection.getWebhooks()){
-                System.out.println(webhook.getUrl());
-            }
-        } catch (EasyPostException e) {
-            e.printStackTrace();
+
+    public static class EasyTrackerBuilder{
+        private String trackerId;
+        private String trackingCode;
+        private String upToDateStatus;
+        private String estDeliveryDate;
+        private String updateAt;
+        private String carrier;
+        private List<EasyTrackingDetail> easyTrackingDetails;
+
+
+        public EasyTrackerBuilder withTrackerId(String trackerId){
+            this.trackerId = trackerId;
+            return this;
         }
-    }
-    public void deleteAllWebhook(){
-        WebhookCollection webhookCollection = null;
-        try {
-            webhookCollection = Webhook.all();
-            for(Webhook webhook : webhookCollection.getWebhooks()){
-                webhook.delete(webhook.getId());
-            }
-        } catch (EasyPostException e) {
-            e.printStackTrace();
+
+        public EasyTrackerBuilder withTrackingCode(String trackingCode){
+            this.trackingCode = trackingCode;
+            return this;
         }
-    }
-    public void createWebhookWithUrl(String url){
-        Map<String, Object> paraMap = new HashMap<String, Object>();
-        paraMap.put("url", url);
-        try {
-            Webhook webhook = Webhook.create(paraMap);
-        } catch (EasyPostException e) {
-            e.printStackTrace();
+
+        public EasyTrackerBuilder withUpToDateStatus(String upToDateStatus){
+            this.upToDateStatus = upToDateStatus;
+            return this;
+        }
+
+        public EasyTrackerBuilder withEstDeliveryDate(String estDeliveryDate){
+            this.estDeliveryDate = estDeliveryDate;
+            return this;
+        }
+
+        public EasyTrackerBuilder withUpdateAt(String updateAt){
+            this.updateAt = updateAt;
+            return this;
+        }
+
+        public EasyTrackerBuilder withCarrier(String carrier){
+            this.carrier = carrier;
+            return this;
+        }
+
+        public EasyTrackerBuilder withEasyTrackingDetails(List<EasyTrackingDetail> easyTrackingDetails){
+            this.easyTrackingDetails = easyTrackingDetails;
+            return this;
+        }
+
+        public EasyTracker build(){
+            return (new EasyTracker(this));
         }
     }
 
+    public String getTrackerId() {
+        return trackerId;
+    }
+
+    public void setTrackerId(String trackerId) {
+        this.trackerId = trackerId;
+    }
+
+    public String getTrackingCode() {
+        return trackingCode;
+    }
+
+    public void setTrackingCode(String trackingCode) {
+        this.trackingCode = trackingCode;
+    }
+
+    public String getUpToDateStatus() {
+        return upToDateStatus;
+    }
+
+    public void setUpToDateStatus(String upToDateStatus) {
+        this.upToDateStatus = upToDateStatus;
+    }
+
+    public String getEstDeliveryDate() {
+        return estDeliveryDate;
+    }
+
+    public void setEstDeliveryDate(String estDeliveryDate) {
+        this.estDeliveryDate = estDeliveryDate;
+    }
+
+    public String getUpdateAt() {
+        return updateAt;
+    }
+
+    public void setUpdateAt(String updateAt) {
+        this.updateAt = updateAt;
+    }
+
+    public String getCarrier() {
+        return carrier;
+    }
+
+    public void setCarrier(String carrier) {
+        this.carrier = carrier;
+    }
+
+    public List<EasyTrackingDetail> getEasyTrackingDetails() {
+        return easyTrackingDetails;
+    }
+
+    public void setEasyTrackingDetails(List<EasyTrackingDetail> easyTrackingDetails) {
+        this.easyTrackingDetails = easyTrackingDetails;
+    }
 }
