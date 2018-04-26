@@ -12,9 +12,9 @@ import com.example.configure.CredentialHelper;
 import java.util.HashMap;
 import java.util.Map;
 
-public class EasyTracker1 {
+public class TrackerSample {
 
-    public EasyTracker1(){
+    public TrackerSample(){
         EasyPost.apiKey= CredentialHelper.getCredentialHelper().getEasypostApiKey();
     }
     public void createTracker(){

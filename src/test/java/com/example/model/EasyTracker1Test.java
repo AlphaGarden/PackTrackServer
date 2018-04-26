@@ -8,11 +8,11 @@ import org.junit.Test;
  * @create 4/17/18
  */
 public class EasyTracker1Test {
-    private EasyTracker1 easyTracker;
+    private TrackerSample easyTracker;
 
     @Before
     public void init(){
-        this.easyTracker = new EasyTracker1();
+        this.easyTracker = new TrackerSample();
     }
 
     @Test
