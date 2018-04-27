@@ -1,17 +1,14 @@
 package com.example.dao;
 
 import com.example.model.CloudMessage;
-import com.example.model.PacTrackUser;
 
 /**
  * @author garden
- * @create 4/25/18
+ * @create 4/26/18
  */
-public interface CloudMessageDao {
-    /**
-     *
-     * send the notification message to GCM Connection Server
-     * @param message The the Message boy need to
-     */
-    void send(CloudMessage message);
+public class CloudMessageDao implements CloudMessageDaoInterface {
+    @Override
+    public void send(CloudMessage message) {
+
+    }
 }
