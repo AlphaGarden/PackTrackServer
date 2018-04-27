@@ -1,7 +1,6 @@
 package com.example.dao;
 
-import com.easypost.model.TrackingDetail;
-import com.example.model.EasyTracker;
+import com.easypost.model.Tracker;
 import com.example.model.PacTrackUser;
 
 import java.util.List;
@@ -13,13 +12,14 @@ import java.util.List;
 public interface TrackingDaoInterface {
 
     /**
-     *
+     * Insert the record <userId, trackers> into the firebase database
      * @param userId The user Identity number.
-     * @param tracker The object need to be inserted in to database.
+     * @param trackers The trackers was search ny users.
      */
-    void insert(String userId, EasyTracker tracker);
+    void insert(String userId, List<Tracker> trackers);
 
     /**
+     * Ensure that per tracking code only corresponds to only one trackerId
      *
      * @param trackingCode The tracking code of a shipment "Z0000000001"
      * @param trackerId The tracker id of a easy post tracker "trk_012bsdkfjkashd123"
@@ -31,7 +31,7 @@ public interface TrackingDaoInterface {
      * @param userId The user Identity number.
      * @return All EasyTrackers under the user ID given.
      */
-    List<EasyTracker> getAllEasyTracker(String userId);
+    List<Tracker> getAllTrackers(String userId);
 
     /**
      *
@@ -44,7 +44,7 @@ public interface TrackingDaoInterface {
     /**
      *
      * @param trackingCode The tracking code of a shipment
-     * @return
+     * @return The corresponding tracker id of that tracking code.
      */
     String getTrackerIdByTrackingCode(String trackingCode);
 
@@ -54,17 +54,16 @@ public interface TrackingDaoInterface {
      * @param trackingCode The code like "Z10000000001".
      * @return The specific EasyTracker by the user id and its tracking number.
      */
-    EasyTracker getOneTracker(String userId, String trackingCode);
+    Tracker getOneTracker(String userId, String trackingCode);
 
 
     /**
-     * Append the updated shipment information
+     * Append the updated shipment
      *
-     * @param userId The user Identity number.
      * @param trackingCode The Tracking Number.
-     * @param newEasyTracker The Updated Easy Tracker Object.
+     * @param newTracker The Updated Easy post Tracker Object.
      */
-    void updateTrackingInfo(String userId, String trackingCode, EasyTracker newEasyTracker);
+    void updateTrackingInfo(String trackingCode, Tracker newTracker);
 
 
 }

@@ -135,4 +135,17 @@ public class EasyTracker {
     public void setEasyTrackingDetails(List<EasyTrackingDetail> easyTrackingDetails) {
         this.easyTrackingDetails = easyTrackingDetails;
     }
+
+    @Override
+    public String toString() {
+        return "EasyTracker{" +
+                "trackerId='" + trackerId + '\'' +
+                ", trackingCode='" + trackingCode + '\'' +
+                ", upToDateStatus='" + upToDateStatus + '\'' +
+                ", estDeliveryDate='" + estDeliveryDate + '\'' +
+                ", updateAt='" + updateAt + '\'' +
+                ", carrier='" + carrier + '\'' +
+                ", easyTrackingDetails=" + easyTrackingDetails +
+                '}';
+    }
 }

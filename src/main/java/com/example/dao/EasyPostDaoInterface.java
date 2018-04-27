@@ -1,7 +1,8 @@
 package com.example.dao;
 
-import com.example.model.EasyTracker;
-import com.example.model.EasyTrackingDetail;
+import com.easypost.model.Tracker;
+import com.easypost.model.TrackingDetail;
+
 
 import java.util.List;
 
@@ -17,20 +18,20 @@ public interface EasyPostDaoInterface {
      * @param carrier The carrier of a shipment
      * @return the easy tracker object
      */
-    EasyTracker createEasyTrackerByTrackingCode(String trackingCode, String carrier);
+    Tracker createTrackerByTrackingCode(String trackingCode, String carrier);
 
     /**
      *
-     * @param trackingCode The code of a shipment
+     * @param trackerId The id of tracker
      * @return The easy tracker object
      */
-    EasyTracker getEasyTrackerByTrackingId(String trackingCode);
+    Tracker getTrackerByTrackerId(String trackerId);
 
     /**
      *
-     * @param trackingCode The code of a shipment
+     * @param trackerId The id of tracker
      * @return the tracking details list
      */
-    List<EasyTrackingDetail> getTrackingDetailsByTrackingCode(String trackingCode);
+    List<TrackingDetail> getTrackingDetailsByTrackerId(String trackerId);
 
 }

@@ -2,10 +2,11 @@ package com.example.dao;
 
 
 import com.easypost.EasyPost;
+import com.easypost.exception.EasyPostException;
 import com.easypost.model.Tracker;
+import com.easypost.model.TrackingDetail;
 import com.example.configure.CredentialHelper;
-import com.example.model.EasyTracker;
-import com.example.model.EasyTrackingDetail;
+
 
 import java.util.HashMap;
 import java.util.List;
@@ -16,6 +17,8 @@ import java.util.List;
  */
 public class EasyPostDao implements EasyPostDaoInterface{
     private static EasyPostDao easyPostDao;
+    private static TrackingDao trackingDao;
+
     private EasyPostDao(){
         EasyPost.apiKey= CredentialHelper.getCredentialHelper().getEasypostApiKey();
     }
@@ -28,25 +31,19 @@ public class EasyPostDao implements EasyPostDaoInterface{
         }
     }
 
+
     @Override
-    public EasyTracker createEasyTrackerByTrackingCode(String trackingCode, String carrier) {
-        HashMap<String, Object> params = new HashMap<>();
-        params.put("tracking_code", trackingCode);
-        params.put("carrier", carrier);
+    public Tracker createTrackerByTrackingCode(String trackingCode, String carrier) {
         return null;
     }
 
     @Override
-    public EasyTracker getEasyTrackerByTrackingId(String trackingId) {
+    public Tracker getTrackerByTrackerId(String trackerId) {
         return null;
     }
 
     @Override
-    public List<EasyTrackingDetail> getTrackingDetailsByTrackingCode(String trackingCode) {
+    public List<TrackingDetail> getTrackingDetailsByTrackerId(String trackerId) {
         return null;
     }
-
-    // Get Tracker info by the trackingCode
-
-
 }
