@@ -24,7 +24,7 @@ public interface EasyPostDaoInterface {
      * @param trackingCode The code of a shipment
      * @return The easy tracker object
      */
-    EasyTracker getEasyTrackerByTrackingCode(String trackingCode);
+    EasyTracker getEasyTrackerByTrackingId(String trackingCode);
 
     /**
      *

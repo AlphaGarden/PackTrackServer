@@ -21,6 +21,13 @@ public interface TrackingDaoInterface {
 
     /**
      *
+     * @param trackingCode The tracking code of a shipment "Z0000000001"
+     * @param trackerId The tracker id of a easy post tracker "trk_012bsdkfjkashd123"
+     */
+    void insert(String trackingCode, String trackerId);
+
+    /**
+     *
      * @param userId The user Identity number.
      * @return All EasyTrackers under the user ID given.
      */
@@ -28,10 +35,18 @@ public interface TrackingDaoInterface {
 
     /**
      *
-     * @param trackingCode The tracking number
+     * @param trackingCode The tracking code of a shipment
      * @return the user lists who have that tracking number in their history
      */
-    List<PacTrackUser> getAllUsersByTrackingNumber(String trackingCode);
+    List<PacTrackUser> getAllUsersByTrackingCode(String trackingCode);
+
+
+    /**
+     *
+     * @param trackingCode The tracking code of a shipment
+     * @return
+     */
+    String getTrackerIdByTrackingCode(String trackingCode);
 
     /**
      *

@@ -2,6 +2,7 @@ package com.example.dao;
 
 
 import com.easypost.EasyPost;
+import com.easypost.model.Tracker;
 import com.example.configure.CredentialHelper;
 import com.example.model.EasyTracker;
 import com.example.model.EasyTrackingDetail;
@@ -32,12 +33,11 @@ public class EasyPostDao implements EasyPostDaoInterface{
         HashMap<String, Object> params = new HashMap<>();
         params.put("tracking_code", trackingCode);
         params.put("carrier", carrier);
-
         return null;
     }
 
     @Override
-    public EasyTracker getEasyTrackerByTrackingCode(String trackingCode) {
+    public EasyTracker getEasyTrackerByTrackingId(String trackingId) {
         return null;
     }
 

@@ -11,7 +11,10 @@ import java.util.List;
  */
 public class TrackingDao implements TrackingDaoInterface {
     @Override
-    public void insert(String userId, EasyTracker tracker) {
+    public void insert(String userId, EasyTracker tracker) { }
+
+    @Override
+    public void insert(String trackingCode, String trackerId) {
 
     }
 
@@ -21,7 +24,13 @@ public class TrackingDao implements TrackingDaoInterface {
     }
 
     @Override
-    public List<PacTrackUser> getAllUsersByTrackingNumber(String trackingCode) {
+    public List<PacTrackUser> getAllUsersByTrackingCode(String trackingCode) {
+        return null;
+    }
+
+
+    @Override
+    public String getTrackerIdByTrackingCode(String trackingCode) {
         return null;
     }
 
