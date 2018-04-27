@@ -2,6 +2,7 @@ package com.example.dao;
 
 import com.easypost.model.TrackingDetail;
 import com.example.model.EasyTracker;
+import com.example.model.PacTrackUser;
 
 import java.util.List;
 
@@ -27,6 +28,13 @@ public interface TrackingDaoInterface {
 
     /**
      *
+     * @param trackingNumber The tracking number
+     * @return the user lists who have that tracking number in their history
+     */
+    List<PacTrackUser> getAllUsersByTrackingNumber(String trackingNumber);
+
+    /**
+     *
      * @param userId The user Identity number.
      * @param trackingNumber The code like "Z10000000001".
      * @return The specific EasyTracker by the user id and its tracking number.
@@ -42,5 +50,6 @@ public interface TrackingDaoInterface {
      * @param newEasyTracker The Updated Easy Tracker Object.
      */
     void updateTrackingInfo(String userId, String trackingNumber, EasyTracker newEasyTracker);
+
 
 }
