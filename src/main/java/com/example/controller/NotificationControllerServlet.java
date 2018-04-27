@@ -18,7 +18,9 @@ public class NotificationControllerServlet extends HttpServlet {
     }
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        // Receive the update information and
+        // Receive the update information.
+        // Send it to the GCM Server.
+        // Send it to the user's email.
     }
 
 }
