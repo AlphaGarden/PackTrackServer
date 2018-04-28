@@ -1,8 +1,11 @@
 package com.example.dao;
 
 import com.easypost.model.Tracker;
+import com.example.error.FirebaseException;
+import com.example.error.JacksonUtilityException;
 import com.example.model.PacTrackUser;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -16,7 +19,7 @@ public interface TrackingDaoInterface {
      * @param userId The user Identity number.
      * @param trackers The trackers was search ny users.
      */
-    void insert(String userId, List<Tracker> trackers);
+    void insert(String userId, List<Tracker> trackers) throws JacksonUtilityException, UnsupportedEncodingException, FirebaseException;
 
     /**
      * Ensure that per tracking code only corresponds to only one trackerId
