@@ -23,6 +23,8 @@ public class CredentialHelper {
     private static Yaml yaml;
     private static InputStream inputStream;
     private static Map<String,Object> data;
+    private static Map<String, String> gmailConfig;
+    private static Map<String, String> smtpConfig;
 
     public static CredentialHelper getCredentialHelper() {
         if (credentialHelper != null){
@@ -36,21 +38,31 @@ public class CredentialHelper {
                 e.printStackTrace();
             }
             data = (HashMap<String, Object>)yaml.load(inputStream);
+            gmailConfig = (Map<String,String>)data.get("google");
+            smtpConfig = (Map<String,String>)data.get("smtp");
             return credentialHelper;
         }
     }
 
 
     public String getEasypostApiKey() {
-        System.out.println(getClass());
+
         return (String) data.get("easypostApi");
     }
 
     public String getGmailUserName(){
-        return ((Map<String,String>)data.get("google")).get("username");
+        System.out.println(gmailConfig.get("username"));
+        return gmailConfig.get("username");
     }
     public String getGmailPassWord(){
-        return ((Map<String,String>)data.get("google")).get("password");
+        System.out.println(gmailConfig.get("password"));
+        return gmailConfig.get("password");
+    }
+    public String getSmtpHost(){
+        return smtpConfig.get("host");
+    }
+    public String getSmtpPort(){
+        return smtpConfig.get("port");
     }
     public static void main(String[] args){
        System.out.println( getCredentialHelper().getGmailPassWord());
