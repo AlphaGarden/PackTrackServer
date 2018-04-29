@@ -14,12 +14,22 @@ public class TrackingDao implements TrackingDaoInterface {
 
 
     @Override
-    public void insert(String userId, List<Tracker> trackers) {
+    public void insert(String userId, String trackerId) {
 
     }
 
     @Override
-    public void insert(String trackingCode, String trackerId) {
+    public void insert(String trackingCode, String carrier, String trackerId) {
+
+    }
+
+    @Override
+    public void insert(String trackingId, Tracker tracker) {
+
+    }
+
+    @Override
+    public void updateTrackerByTrackerId(String trackerId, Tracker newTracker) {
 
     }
 
@@ -29,22 +39,22 @@ public class TrackingDao implements TrackingDaoInterface {
     }
 
     @Override
-    public List<PacTrackUser> getAllUsersByTrackingCode(String trackingCode) {
+    public List<String> getAllUserIdsByTrackerId(String trackerId) {
         return null;
     }
 
     @Override
-    public String getTrackerIdByTrackingCode(String trackingCode) {
+    public List<String> getEmailsByTrackerId(String trackerId) {
         return null;
     }
 
     @Override
-    public Tracker getOneTracker(String userId, String trackingCode) {
+    public String getTrackerIdByTrackingCodeAndCarrier(String trackingCode, String carrier) {
         return null;
     }
 
     @Override
-    public void updateTrackingInfo(String trackingCode, Tracker newTracker) {
-
+    public Tracker getOneTracker(String trackingId) {
+        return null;
     }
 }

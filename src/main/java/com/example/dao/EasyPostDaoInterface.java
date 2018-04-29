@@ -18,7 +18,7 @@ public interface EasyPostDaoInterface {
      * @param carrier The carrier of a shipment
      * @return the easy tracker object
      */
-    Tracker createTrackerByTrackingCode(String trackingCode, String carrier);
+    Tracker createTrackerByTrackingCodeAndCarrier(String trackingCode, String carrier);
 
     /**
      *
