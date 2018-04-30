@@ -1,7 +1,7 @@
 package com.example.helper;
 
 
-import com.example.configure.CredentialHelper;
+import com.example.configure.SysConfigHelper;
 import com.example.model.EasyMail;
 
 import javax.mail.Message;
@@ -17,7 +17,7 @@ import java.util.Properties;
  * @create 4/16/18
  */
 public class MailHelper {
-    private static final CredentialHelper credentialHelper = CredentialHelper.getCredentialHelper();
+    private static final SysConfigHelper credentialHelper = SysConfigHelper.getCredentialHelper();
     private static MailHelper mailHelper;
     private static String USER_NAME = credentialHelper.getGmailUserName();
     private static String PASS_WORD = credentialHelper.getGmailPassWord();
@@ -41,7 +41,22 @@ public class MailHelper {
         }
     }
 
-    public void send(EasyMail mail){
+    private class SendThread implements Runnable{
+        EasyMail mail;
+        public SendThread(EasyMail newMail){
+            this.mail = newMail;
+        }
+        @Override
+        public void run() {
+            send(this.mail);
+        }
+    }
+
+    public SendThread createSendThread(EasyMail mail){
+        return new SendThread(mail);
+    }
+
+    private void send(EasyMail mail){
         Session session = Session.getDefaultInstance(properties);
         MimeMessage message = new MimeMessage(session);
         try {

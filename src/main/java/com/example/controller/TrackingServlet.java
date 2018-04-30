@@ -14,8 +14,8 @@ import java.io.IOException;
  * @author garden
  * @create 4/24/18
  */
-@WebServlet(name = "createTracking", value = "/createTracking")
-public class TrackingControllerServlet extends HttpServlet {
+@WebServlet(name = "createTracking", value = "/create")
+public class TrackingServlet extends HttpServlet {
     private static EasyPostDao easyPostDao = EasyPostDao.getEasyPostDao();
     private static TrackingDao trackingDao = new TrackingDao();
     @Override

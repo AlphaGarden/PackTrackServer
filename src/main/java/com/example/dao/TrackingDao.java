@@ -29,6 +29,11 @@ public class TrackingDao implements TrackingDaoInterface {
     }
 
     @Override
+    public void deleteTrackerById(String userId, String trackerId) {
+
+    }
+
+    @Override
     public void updateTrackerByTrackerId(String trackerId, Tracker newTracker) {
 
     }

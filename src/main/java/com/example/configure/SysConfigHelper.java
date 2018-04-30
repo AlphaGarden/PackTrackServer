@@ -3,7 +3,6 @@ package com.example.configure;
 import org.yaml.snakeyaml.Yaml;
 
 
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -15,9 +14,9 @@ import java.util.Map;
  * @author garden
  * @create 4/15/18
  */
-public class CredentialHelper {
-    private static CredentialHelper credentialHelper;
-    private CredentialHelper(){}
+public class SysConfigHelper {
+    private static SysConfigHelper credentialHelper;
+    private SysConfigHelper(){}
     // Need to set up to be relative path.
     private static final String CREDENTIAL_CONFIG = "target/PackTrackServer-1.0-SNAPSHOT/WEB-INF/classes/Credentials.yaml";
     private static Yaml yaml;
@@ -26,11 +25,11 @@ public class CredentialHelper {
     private static Map<String, String> gmailConfig;
     private static Map<String, String> smtpConfig;
 
-    public static CredentialHelper getCredentialHelper() {
+    public static SysConfigHelper getCredentialHelper() {
         if (credentialHelper != null){
             return credentialHelper;
         }else{
-            credentialHelper = new CredentialHelper();
+            credentialHelper = new SysConfigHelper();
             yaml = new Yaml();
             try {
                 inputStream = new FileInputStream(CREDENTIAL_CONFIG);
@@ -63,6 +62,9 @@ public class CredentialHelper {
     }
     public String getSmtpPort(){
         return smtpConfig.get("port");
+    }
+    public int getThreadPoolSize(){
+        return  (int)data.get("threadPoolSize");
     }
     public static void main(String[] args){
        System.out.println( getCredentialHelper().getGmailPassWord());

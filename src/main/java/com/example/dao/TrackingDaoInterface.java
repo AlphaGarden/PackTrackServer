@@ -34,6 +34,16 @@ public interface TrackingDaoInterface {
     void insert(String trackingId, Tracker tracker);
 
     /**
+     *
+     * This operation only delete the relation record between user and the tracker
+     * which means that the tracker will not be deleted but the relation record.
+     *
+     * @param userId The user identification
+     * @param trackerId The  tracker Id.
+     */
+    void deleteTrackerById(String userId, String trackerId);
+
+    /**
      * Update the tracker by its tracking id.
      *
      * @param trackerId The tracker
@@ -82,7 +92,5 @@ public interface TrackingDaoInterface {
      * @return The specific Tracker  its tracker id.
      */
     Tracker getOneTracker(String trackingId);
-
-
 
 }

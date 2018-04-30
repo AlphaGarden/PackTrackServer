@@ -5,7 +5,7 @@ import com.easypost.EasyPost;
 import com.easypost.exception.EasyPostException;
 import com.easypost.model.Tracker;
 import com.easypost.model.TrackingDetail;
-import com.example.configure.CredentialHelper;
+import com.example.configure.SysConfigHelper;
 
 
 import java.util.HashMap;
@@ -19,7 +19,7 @@ public class EasyPostDao implements EasyPostDaoInterface{
     private static EasyPostDao easyPostDao;
 
     private EasyPostDao(){
-        EasyPost.apiKey= CredentialHelper.getCredentialHelper().getEasypostApiKey();
+        EasyPost.apiKey= SysConfigHelper.getCredentialHelper().getEasypostApiKey();
     }
     public static EasyPostDao getEasyPostDao(){
         if (easyPostDao != null){
