@@ -15,60 +15,91 @@ import java.util.Map;
  * @create 4/15/18
  */
 public class SysConfigHelper {
+//    private static SysConfigHelper credentialHelper;
+//    private SysConfigHelper(){}
+//    // Need to set up to be relative path.
+//    private static final String CREDENTIAL_CONFIG = "WEB-INF/SysConfig.yaml";
+//    private static Yaml yaml;
+//    private static InputStream inputStream;
+//    private static Map<String,Object> data;
+//    private static Map<String, String> gmailConfig;
+//    private static Map<String, String> smtpConfig;
+//
+//    public static SysConfigHelper getCredentialHelper() {
+//        if (credentialHelper != null){
+//            return credentialHelper;
+//        }else{
+//            credentialHelper = new SysConfigHelper();
+//            yaml = new Yaml();
+//            try {
+//                inputStream = new FileInputStream(CREDENTIAL_CONFIG);
+//            } catch (FileNotFoundException e) {
+//                e.printStackTrace();
+//            }
+//            data = (HashMap<String, Object>)yaml.load(inputStream);
+//            gmailConfig = (Map<String,String>)data.get("google");
+//            smtpConfig = (Map<String,String>)data.get("smtp");
+//            return credentialHelper;
+//        }
+//    }
+
+
+
+//    public String getEasypostApiKey() {
+//
+//        return "T5DOCT0xW4NHVB35ZIqBPg";
+//    }
+//
+//    public String getGmailUserName(){
+//        System.out.println(gmailConfig.get("username"));
+//        return ;
+//    }
+//    public String getGmailPassWord(){
+//        System.out.println(gmailConfig.get("password"));
+//        return gmailConfig.get("password");
+//    }
+//    public String getSmtpHost(){
+//        return smtpConfig.get("host");
+//    }
+//    public String getSmtpPort(){
+//        return smtpConfig.get("port");
+//    }
+//    public int getThreadPoolSize(){
+//        return  (int)data.get("threadPoolSize");
+//    }
+//
     private static SysConfigHelper credentialHelper;
     private SysConfigHelper(){}
-    // Need to set up to be relative path.
-    private static final String CREDENTIAL_CONFIG = "target/PackTrackServer-1.0-SNAPSHOT/WEB-INF/classes/SysConfig.yaml";
-    private static Yaml yaml;
-    private static InputStream inputStream;
-    private static Map<String,Object> data;
-    private static Map<String, String> gmailConfig;
-    private static Map<String, String> smtpConfig;
-
     public static SysConfigHelper getCredentialHelper() {
-        if (credentialHelper != null){
+        if (credentialHelper != null) {
             return credentialHelper;
-        }else{
+        } else {
             credentialHelper = new SysConfigHelper();
-            yaml = new Yaml();
-            try {
-                inputStream = new FileInputStream(CREDENTIAL_CONFIG);
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            }
-            data = (HashMap<String, Object>)yaml.load(inputStream);
-            gmailConfig = (Map<String,String>)data.get("google");
-            smtpConfig = (Map<String,String>)data.get("smtp");
             return credentialHelper;
         }
     }
+    public String getEasypostApiKey(){
 
-
-    public String getEasypostApiKey() {
-
-        return (String) data.get("easypostApi");
-    }
+    return "T5DOCT0xW4NHVB35ZIqBPg";
+}
 
     public String getGmailUserName(){
-        System.out.println(gmailConfig.get("username"));
-        return gmailConfig.get("username");
+
+        return "pactrackservice@gmail.com";
     }
     public String getGmailPassWord(){
-        System.out.println(gmailConfig.get("password"));
-        return gmailConfig.get("password");
+        return "cse546project2";
     }
     public String getSmtpHost(){
-        return smtpConfig.get("host");
+        return "smtp.gmail.com";
     }
     public String getSmtpPort(){
-        return smtpConfig.get("port");
+        return "587";
     }
     public int getThreadPoolSize(){
-        return  (int)data.get("threadPoolSize");
+        return  10;
     }
-    public static void main(String[] args){
-       System.out.println( getCredentialHelper().getGmailPassWord());
-    }
+
 
 
 }

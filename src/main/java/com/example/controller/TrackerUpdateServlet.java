@@ -7,6 +7,7 @@ import com.example.configure.SysConfigHelper;
 import com.example.dao.CloudMessageDao;
 import com.example.dao.TrackingDao;
 import com.example.helper.MailHelper;
+import com.example.helper.ResponseHelper;
 import com.example.model.CloudMessage;
 import com.example.model.EasyMail;
 import com.google.gson.FieldNamingPolicy;
@@ -35,6 +36,7 @@ public class TrackerUpdateServlet extends HttpServlet {
     private static CloudMessageDao cloudMessageDao = new CloudMessageDao();
     private static ExecutorService executor ;
     private static MailHelper mailHelper = MailHelper.getInstance();
+    private static ResponseHelper responseHelper = ResponseHelper.getResponseHelper();
     private static final Gson gson = new GsonBuilder()
             .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .registerTypeAdapter(Event.class, new EventDeserializer())
@@ -66,14 +68,16 @@ public class TrackerUpdateServlet extends HttpServlet {
                         .build();
                 cloudMessageDao.send(message);
             }
+
             //  Implementation of sending email with multi-thread and thread pool
             executor = Executors.newFixedThreadPool(sysConfigHelper.getThreadPoolSize());
             for(String email : userEmails){
-                // TODO Send email to every user
+                //  Send email to every user
                 EasyMail easyMail = new EasyMail(null,"Test from update", "<h1>Hello world</h1>");
                 easyMail.setReceiptant(email);
                 executor.execute(mailHelper.createSendThread(easyMail));
             }
+
             // When all mail is ready to be sent
             executor.shutdown();
             try {
@@ -81,6 +85,7 @@ public class TrackerUpdateServlet extends HttpServlet {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+            responseHelper.sendResponse(resp, tracker.getTrackingDetails());
 
         }else{
             System.out.println("The tracker retrieved from the event object is null");

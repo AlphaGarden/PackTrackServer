@@ -3,6 +3,8 @@ package com.example.controller;
 import com.easypost.model.Tracker;
 import com.example.dao.EasyPostDao;
 import com.example.dao.TrackingDao;
+import com.example.helper.RequestParameters;
+import com.example.helper.ResponseHelper;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -15,14 +17,15 @@ import java.io.IOException;
  * @create 4/24/18
  */
 @WebServlet(name = "createTracking", value = "/create")
-public class TrackingServlet extends HttpServlet {
+public class TrackerCreateServlet extends HttpServlet {
     private static EasyPostDao easyPostDao = EasyPostDao.getEasyPostDao();
     private static TrackingDao trackingDao = new TrackingDao();
+    private static ResponseHelper responseHelper = ResponseHelper.getResponseHelper();
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String userId = req.getParameter("userId");
-        String carrier = req.getParameter("carrier");
-        String trackingCode = req.getParameter("trackingCode");
+        String userId = req.getParameter(RequestParameters.USERID.toString());
+        String carrier = req.getParameter(RequestParameters.CARRIER.toString());
+        String trackingCode = req.getParameter(RequestParameters.TRACKINGCODE.toString());
         String trackerId = trackingDao.getTrackerIdByTrackingCodeAndCarrier(trackingCode, carrier);
         Tracker tracker;
         // When the tracker is not created
@@ -41,7 +44,7 @@ public class TrackingServlet extends HttpServlet {
         }
 
         // return its tracking details.
-
+        responseHelper.sendResponse(resp, tracker.getTrackingDetails());
 
     }
     @Override
