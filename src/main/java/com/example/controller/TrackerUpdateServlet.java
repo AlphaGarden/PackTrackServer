@@ -85,7 +85,14 @@ public class TrackerUpdateServlet extends HttpServlet {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            responseHelper.sendResponse(resp, tracker.getTrackingDetails());
+
+            List<TrackingDetail> trackingDetails = tracker.getTrackingDetails();
+            if (trackingDetails != null){
+                responseHelper.sendResponse(resp, trackingDetails);
+            }else{
+                System.out.println("The trackingDetails is null");
+            }
+
 
         }else{
             System.out.println("The tracker retrieved from the event object is null");
