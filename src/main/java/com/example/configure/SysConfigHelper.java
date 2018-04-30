@@ -18,7 +18,7 @@ public class SysConfigHelper {
     private static SysConfigHelper credentialHelper;
     private SysConfigHelper(){}
     // Need to set up to be relative path.
-    private static final String CREDENTIAL_CONFIG = "target/PackTrackServer-1.0-SNAPSHOT/WEB-INF/classes/Credentials.yaml";
+    private static final String CREDENTIAL_CONFIG = "target/PackTrackServer-1.0-SNAPSHOT/WEB-INF/classes/SysConfig.yaml";
     private static Yaml yaml;
     private static InputStream inputStream;
     private static Map<String,Object> data;
