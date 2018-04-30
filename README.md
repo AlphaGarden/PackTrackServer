@@ -4,7 +4,7 @@
 
 **Return the tracker created by tracking code and carrier**
 
-* **Url: ** `/create`
+* **Url:** `/create`
 
 * **Method:** `GET`
 
@@ -24,11 +24,11 @@
 
 * **Success Response:**
 
-  * **Code: **`200`
+  * **Code:** `200`
 
-  * **Content: ** 
+  * **Content:** 
 
-    <details><summary>`Tracker Json`</summary>
+    <details><summary>Tracker Json</summary>
     <p>
 
     ```json
@@ -208,7 +208,7 @@
 * **Error Response:**
 
   * **Code:** ` 500`
-  * **Content: ** `{"ERROR":"Sever Exception"}`
+  * **Content:** `{"ERROR":"Sever Exception"}`
 
 ---
 
@@ -220,9 +220,9 @@
 
 **Delte the tracker created by tracking code, carrier  and the user ID**
 
-- **Url: ** `/delete`
+- **Url:** `/delete`
 
-- **Method: ** ` GET`
+- **Method:** ` GET`
 
 - **URL Params:**
 
@@ -240,13 +240,13 @@
 
 - **Success Response:**
 
-  - **Code: **`200`
-  - **Content: ** `{"SUCCESS" : "Delete Success"}`
+  - **Code:** `200`
+  - **Content:** `{"SUCCESS" : "Delete Success"}`
 
 - **Error Response:**
 
-  - **Code: **`404`
-  - **Content: ** `{"ERROR" : "Delete Failed with invalid tracking code"}`
+  - **Code:** `404`
+  - **Content:** `{"ERROR" : "Delete Failed with invalid tracking code"}`
 
 ---
 
@@ -258,13 +258,13 @@
 
 **Rerturn the tracking history by the user ID**
 
-- **Url: ** ` /history`
+- **Url:** ` /history`
 
 - **Method:** `GET`
 
 - **URL Params:** 
 
-  **Required: **
+  **Required:**
 
   `USERID` = [String]
 
@@ -274,13 +274,13 @@
 
 - **Success Response:**
 
-  - **Code: **`200`
-  - **Content: ** 
+  - **Code:** `200`
+  - **Content:** 
 
 - **Error Response:**
 
-  - **Code: ** `404`
-  - **Content: ** `{"ERROR" : "Delete Failed with invalid tracking code"}`
+  - **Code:** `404`
+  - **Content:** `{"ERROR" : "Delete Failed with invalid tracking code"}`
 
 ------
 
@@ -292,7 +292,7 @@
 
 **Rerturn the tracking history by the tracking code and carrier**
 
-- **Url: ** `/query`
+- **Url:** `/query`
 
 - **Method:** `GET`
 
@@ -312,11 +312,11 @@
 
 - **Success Response**
 
-  - **Code: **`200`
+  - **Code:** `200`
 
-  - **Content: ** 
+  - **Content:** 
 
-    <details><summary>`Tracker Json`</summary>
+    <details><summary> Tracker Json </summary>
     <p>
 
     ```json
@@ -495,8 +495,8 @@
 
 - **Error Response**
 
-  - **Code: **`404`
-  - **Content: ** `{"ERROR" : "Query Failed with invalid tracking code"}`
+  - **Code:** `404`
+  - **Content:** `{"ERROR" : "Query Failed with invalid tracking code"}`
 
 ------
 
@@ -510,9 +510,9 @@
 
 **Rerturn the tracking history by the user ID**
 
-- **Url: ** `/update`
+- **Url:** `/update`
 
-- **Method: **`POST` 
+- **Method:** `POST` 
 
 - **URL Params**
 
@@ -522,7 +522,7 @@
 
   **Required**:
 
-  <details><summary>`Event  Json`</summary>
+  <details><summary>Event Json</summary>
   <p>
 
   ```json
@@ -716,15 +716,15 @@
   </p>
   </details>
 
-- **Success Response: **  
+- **Success Response:**  
 
-  - **Code: **`200`
-  - **Content: ** `{"SUCCESS" : "Update Succeeded"}`
+  - **Code:** `200`
+  - **Content:** `{"SUCCESS" : "Update Succeeded"}`
 
 - **Error Response**
 
-  - **Code: **`500`
-  - **Content: ** `{"ERROR" : "Server Error"}`
+  - **Code:** `500`
+  - **Content:** `{"ERROR" : "Server Error"}`
 
 ------
 
