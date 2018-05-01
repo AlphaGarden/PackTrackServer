@@ -7,7 +7,7 @@ package com.example.model;
 import com.easypost.EasyPost;
 import com.easypost.exception.EasyPostException;
 import com.easypost.model.*;
-import com.example.configure.CredentialHelper;
+import com.example.configure.SysConfigHelper;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ import java.util.Map;
 public class TrackerSample {
 
     public TrackerSample(){
-        EasyPost.apiKey= CredentialHelper.getCredentialHelper().getEasypostApiKey();
+        EasyPost.apiKey= SysConfigHelper.getCredentialHelper().getEasypostApiKey();
     }
     public void createTracker(){
         HashMap<String, Object> params = new HashMap<>();

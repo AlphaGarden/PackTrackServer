@@ -1,16 +1,18 @@
 package com.example.model;
 
+import com.easypost.model.Tracker;
+
 /**
  * @author garden
  * @create 4/16/18
  */
 public class CloudMessage {
     private String toClient; // The Client ID
-    private String message; // The message body
+    private Tracker tracker; // The message body
 
     private CloudMessage(CloudMessageBuilder builder){
         this.toClient = builder.toClient;
-        this.message = builder.message;
+        this.tracker = builder.tracker;
     }
 
     public static CloudMessageBuilder builder(){
@@ -19,15 +21,15 @@ public class CloudMessage {
 
     public static class CloudMessageBuilder{
         private String toClient; // The Client ID
-        private String message; // The message body
+        private Tracker tracker; // The message body
 
         public CloudMessageBuilder withToClient(String toClient){
             this.toClient = toClient;
             return this;
         }
 
-        public CloudMessageBuilder withMessage(String messgae){
-            this.message = messgae;
+        public CloudMessageBuilder withTracker(Tracker newTracker){
+            this.tracker = newTracker;
             return this;
         }
 
@@ -44,11 +46,11 @@ public class CloudMessage {
         this.toClient = toClient;
     }
 
-    public String getMessage() {
-        return message;
+    public Tracker getTracker() {
+        return tracker;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setTracker(Tracker tracker) {
+        this.tracker = tracker;
     }
 }

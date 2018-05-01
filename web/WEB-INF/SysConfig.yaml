@@ -1,0 +1,8 @@
+easypostApi: T5DOCT0xW4NHVB35ZIqBPg
+google:
+  username: pactrackservice@gmail.com
+  password: cse546project2
+smtp:
+  host: smtp.gmail.com
+  port: '587'
+threadPoolSize: 10
