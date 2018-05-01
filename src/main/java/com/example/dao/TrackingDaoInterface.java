@@ -27,14 +27,14 @@ public interface TrackingDaoInterface {
      * @param trackingCode The tracking code of a shipment "Z0000000001"
      * @param trackerId The tracker id of a easy post tracker "trk_012bsdkfjkashd123"
      */
-    void insert(String trackingCode, String trackerId);
+    void insert(String trackingCode, String trackerId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException;
 
     /**
      *
      * @param userId The user Identity number.
      * @return All EasyTrackers under the user ID given.
      */
-    List<Tracker> getAllTrackers(String userId);
+    List<Tracker> getAllTrackers(String userId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException;
 
     /**
      *

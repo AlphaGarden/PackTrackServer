@@ -61,12 +61,22 @@ public class TrackingDao implements TrackingDaoInterface {
     }
 
     @Override
-    public void insert(String trackingCode, String trackerId) {
+    public void insert(String trackingCode, String trackerId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
 
+        Map<String, Object> datamap = new LinkedHashMap<>();
+        datamap.put(trackingCode, trackerId);
+
+        //make the request
+        String url = this.buildFullUrlFromRelativePath("TrackerId");
+        HttpPut request = new HttpPut(url);
+        request.setEntity(this.buildEntityFromDataMap(datamap));
+        this.makeRequest(request);
     }
 
     @Override
-    public List<Tracker> getAllTrackers(String userId) {
+    public List<Tracker> getAllTrackers(String userId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException {
+        String url = this.buildFullUrlFromRelativePath(userId);
+        HttpGet request = new HttpGet(url);
         return null;
     }
 
