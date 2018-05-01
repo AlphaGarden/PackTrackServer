@@ -49,7 +49,7 @@ public class TrackerCreateServlet extends HttpServlet {
           responseHelper.sendResponse(resp, tracker.getTrackingDetails(), HttpServletResponse.SC_OK);
 
       }catch (Exception e){
-          ServerInfo info = new ServerInfo("Servlet Exception");
+          ServerInfo info = new ServerInfo("Servlet Internal Error.");
           responseHelper.sendResponse(resp, info, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
           e.printStackTrace();
       }

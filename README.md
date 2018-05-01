@@ -208,7 +208,7 @@
 * **Error Response:**
 
   * **Code:** ` 500`
-  * **Content:** `{"info":"Servlet Exception"}`
+  * **Content:** `{"info":"Servlet Internal Error."}`
 
 ---
 
@@ -301,8 +301,8 @@
 
 - **Error Response:**
 
-  - **Code:** `404`
-  - **Content:** `{"info" : "Delete Failed with invalid tracking code"}`
+  - **Code:** `500`
+  - **Content:** `{"info" : "Servlet Internal Error."}`
 
 ------
 
@@ -746,7 +746,7 @@
 - **Error Response**
 
   - **Code:** `500`
-  - **Content:** `{"info" : "Server Error"}`
+  - **Content:** `{"info" : "Servlet Internal Error."}`
 
 ------
 

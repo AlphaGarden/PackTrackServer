@@ -88,7 +88,7 @@ public class TrackerUpdateServlet extends HttpServlet {
             }
         }catch (Exception e){
             e.printStackTrace();
-            ServerInfo error = new ServerInfo("Server Error");
+            ServerInfo error = new ServerInfo("Servlet Internal Error.");
             responseHelper.sendResponse(resp, error, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
         }
     }

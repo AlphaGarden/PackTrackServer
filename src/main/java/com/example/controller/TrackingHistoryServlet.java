@@ -4,6 +4,7 @@ import com.easypost.model.Tracker;
 import com.example.dao.TrackingDao;
 import com.example.helper.RequestParameters;
 import com.example.helper.ResponseHelper;
+import com.example.model.ServerInfo;
 import com.example.model.TrackingRecord;
 
 import javax.servlet.annotation.WebServlet;
@@ -24,23 +25,23 @@ public class TrackingHistoryServlet extends HttpServlet {
     private ResponseHelper responseHelper = ResponseHelper.getResponseHelper();
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String userId = req.getParameter(RequestParameters.USERID.toString());
-        List<Tracker> trackers = trackingDao.getAllTrackers(userId);
-        if (trackers != null){
-            List<TrackingRecord> records = new LinkedList<>();
-            for (Tracker tracker : trackers){
-                records.add(new TrackingRecord(
-                   tracker.getTrackingCode(),
-                   tracker.getCarrier(),
-                   tracker.getUpdatedAt().toString()
-                ));
-            }
-            responseHelper.sendResponse(resp, records, HttpServletResponse.SC_OK);
-        }else{
-            System.out.println("The history is null");
-
-            // TODO to make a rule that when response is null
-        }
+       try{
+           String userId = req.getParameter(RequestParameters.USERID.toString());
+           List<Tracker> trackers = trackingDao.getAllTrackers(userId);
+           if (trackers != null){
+               List<TrackingRecord> records = new LinkedList<>();
+               for (Tracker tracker : trackers){
+                   records.add(new TrackingRecord(
+                           tracker.getTrackingCode(),
+                           tracker.getCarrier(),
+                           tracker.getUpdatedAt().toString()
+                   ));
+               }
+               responseHelper.sendResponse(resp, records, HttpServletResponse.SC_OK);
+           }
+       }catch (Exception e){
+           ServerInfo info = new ServerInfo("Servlet Internal Error.");
+       }
 
     }
     @Override
