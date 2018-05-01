@@ -208,7 +208,7 @@
 * **Error Response:**
 
   * **Code:** ` 500`
-  * **Content:** `{"ERROR":"Sever Exception"}`
+  * **Content:** `{"info":"Servlet Exception"}`
 
 ---
 
@@ -241,12 +241,12 @@
 - **Success Response:**
 
   - **Code:** `200`
-  - **Content:** `{"SUCCESS" : "Delete Success"}`
+  - **Content:** `{"info" : "Delete Success"}`
 
 - **Error Response:**
 
   - **Code:** `404`
-  - **Content:** `{"ERROR" : "Delete Failed with invalid tracking code"}`
+  - **Content:** `{"info" : "Delete Failed with invalid tracking code"}`
 
 ---
 
@@ -275,12 +275,34 @@
 - **Success Response:**
 
   - **Code:** `200`
+
   - **Content:** 
+
+    <details><summary>Tracker Json</summary>
+    <p>
+
+    ```json
+    [
+      {
+        "tracking_code": "JDS0234912",
+        "carrier": "Fedex",
+        "last_updated_at": "Web 23 2018xxx"
+      },
+      {
+        "tracking_code": "bayS02312",
+        "carrier": "UPS",
+        "last_updated_at": "Web 24 2018xx"
+      }
+    ]
+    ```
+
+    </p>
+    </details>
 
 - **Error Response:**
 
   - **Code:** `404`
-  - **Content:** `{"ERROR" : "Delete Failed with invalid tracking code"}`
+  - **Content:** `{"info" : "Delete Failed with invalid tracking code"}`
 
 ------
 
@@ -496,7 +518,7 @@
 - **Error Response**
 
   - **Code:** `404`
-  - **Content:** `{"ERROR" : "Query Failed with invalid tracking code"}`
+  - **Content:** `{"info" : "Query Failed with invalid tracking code"}`
 
 ------
 
@@ -719,12 +741,12 @@
 - **Success Response:**  
 
   - **Code:** `200`
-  - **Content:** `{"SUCCESS" : "Update Succeeded"}`
+  - **Content:** `{"info" : "Update Succeeded"}`
 
 - **Error Response**
 
   - **Code:** `500`
-  - **Content:** `{"ERROR" : "Server Error"}`
+  - **Content:** `{"info" : "Server Error"}`
 
 ------
 

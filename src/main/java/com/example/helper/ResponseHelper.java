@@ -14,6 +14,7 @@ import java.util.List;
  */
 public class ResponseHelper {
     private static ResponseHelper responseHelper;
+    private static JsonConverter converter = JsonConverter.getConverter();
     private ResponseHelper(){}
     public static ResponseHelper getResponseHelper(){
         if(responseHelper != null){
@@ -24,11 +25,14 @@ public class ResponseHelper {
         }
     }
 
-    public <T> void sendResponse(HttpServletResponse response, T details) throws IOException {
+
+    public <T> void sendResponse(HttpServletResponse response, T details, int sc) throws IOException {
+        response.setStatus(sc);
         PrintWriter out = response.getWriter();
-        Gson gson = new Gson();
         response.setContentType("application/json");
-        out.print(gson.toJson(details));
+        out.print(converter.convertToJsonStringWithObject(details));
+        System.out.println(converter.convertToJsonStringWithObject(details));
         out.flush();
     }
+
 }

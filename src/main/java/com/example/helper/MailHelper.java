@@ -72,7 +72,6 @@ public class MailHelper {
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
             System.out.println("The test email has been sent!");
-            System.out.println("Add some difference!");
         } catch (MessagingException e) {
             e.printStackTrace();
         }

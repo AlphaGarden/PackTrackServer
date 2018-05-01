@@ -3,6 +3,7 @@ package com.example.controller;
 import com.example.dao.TrackingDao;
 import com.example.helper.RequestParameters;
 import com.example.helper.ResponseHelper;
+import com.example.model.ServerInfo;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,7 +17,8 @@ import java.io.IOException;
  */
 @WebServlet(name = "deleteTracking", value = "/delete")
 public class TrackingDeleteServlet extends HttpServlet {
-    private TrackingDao trackingDao = new TrackingDao();
+    private static TrackingDao trackingDao = new TrackingDao();
+    private static ResponseHelper responseHelper = ResponseHelper.getResponseHelper();
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String userId = req.getParameter(RequestParameters.USERID.toString());
@@ -25,11 +27,13 @@ public class TrackingDeleteServlet extends HttpServlet {
         String trackerId = trackingDao.getTrackerIdByTrackingCodeAndCarrier(trackingCode, carrier);
         if(trackerId != null){
             trackingDao.deleteTrackerById(userId, trackerId);
+            ServerInfo info = new ServerInfo("Delete Success");
+            responseHelper.sendResponse(resp, info, HttpServletResponse.SC_OK);
         }else{
+            ServerInfo info = new ServerInfo("Delete Failed with invalid tracking code");
+            responseHelper.sendResponse(resp, info, HttpServletResponse.SC_NOT_FOUND);
             System.out.println("Try to delete a null tracker");
         }
-
-        //TODO to confirm the format of response
     }
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException{

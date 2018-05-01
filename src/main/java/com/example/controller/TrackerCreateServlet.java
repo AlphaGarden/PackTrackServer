@@ -5,6 +5,8 @@ import com.example.dao.EasyPostDao;
 import com.example.dao.TrackingDao;
 import com.example.helper.RequestParameters;
 import com.example.helper.ResponseHelper;
+import com.example.model.ServerInfo;
+import io.grpc.Server;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,29 +25,34 @@ public class TrackerCreateServlet extends HttpServlet {
     private static ResponseHelper responseHelper = ResponseHelper.getResponseHelper();
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-        String userId = req.getParameter(RequestParameters.USERID.toString());
-        String carrier = req.getParameter(RequestParameters.CARRIER.toString());
-        String trackingCode = req.getParameter(RequestParameters.TRACKINGCODE.toString());
-        String trackerId = trackingDao.getTrackerIdByTrackingCodeAndCarrier(trackingCode, carrier);
-        Tracker tracker;
-        // When the tracker is not created
-        if (trackerId == null){
-            // Then we create it
-            tracker = easyPostDao.createTrackerByTrackingCodeAndCarrier(trackingCode, carrier);
-            trackerId = tracker.getId();
-            // save the user id and the corresponding tracker Id into the database
-            trackingDao.insert(userId, trackerId);
-            // save tracking code, carrier and corresponding tracker id into the database
-            trackingDao.insert(trackingCode, carrier, trackerId);
-            // save the tracker id and the corresponding tracker into the database
-            trackingDao.insert(trackerId, tracker);
-        }else{
-            tracker = trackingDao.getOneTracker(trackerId);
-        }
+      try{
+          String userId = req.getParameter(RequestParameters.USERID.toString());
+          String carrier = req.getParameter(RequestParameters.CARRIER.toString());
+          String trackingCode = req.getParameter(RequestParameters.TRACKINGCODE.toString());
+          String trackerId = trackingDao.getTrackerIdByTrackingCodeAndCarrier(trackingCode, carrier);
+          Tracker tracker;
+          // When the tracker is not created
+          if (trackerId == null){
+              // Then we create it
+              tracker = easyPostDao.createTrackerByTrackingCodeAndCarrier(trackingCode, carrier);
+              trackerId = tracker.getId();
+              // save the user id and the corresponding tracker Id into the database
+              trackingDao.insert(userId, trackerId);
+              // save tracking code, carrier and corresponding tracker id into the database
+              trackingDao.insert(trackingCode, carrier, trackerId);
+              // save the tracker id and the corresponding tracker into the database
+              trackingDao.insert(trackerId, tracker);
+          }else{
+              tracker = trackingDao.getOneTracker(trackerId);
+          }
+          // return its tracking details.
+          responseHelper.sendResponse(resp, tracker.getTrackingDetails(), HttpServletResponse.SC_OK);
 
-        // return its tracking details.
-        responseHelper.sendResponse(resp, tracker.getTrackingDetails());
-
+      }catch (Exception e){
+          ServerInfo info = new ServerInfo("Servlet Exception");
+          responseHelper.sendResponse(resp, info, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+          e.printStackTrace();
+      }
     }
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {

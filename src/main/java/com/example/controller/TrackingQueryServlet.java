@@ -4,6 +4,7 @@ import com.easypost.model.Tracker;
 import com.example.dao.TrackingDao;
 import com.example.helper.RequestParameters;
 import com.example.helper.ResponseHelper;
+import com.example.model.ServerInfo;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -26,8 +27,10 @@ public class TrackingQueryServlet extends HttpServlet {
         String trackerId = trackingDao.getTrackerIdByTrackingCodeAndCarrier(trackingCode, carrier);
         Tracker tracker = trackingDao.getOneTracker(trackerId);
         if (tracker != null){
-            responseHelper.sendResponse(resp, tracker);
+            responseHelper.sendResponse(resp, tracker, HttpServletResponse.SC_OK);
         }else{
+            ServerInfo info = new ServerInfo("Query Failed with invalid tracking code");
+            responseHelper.sendResponse(resp, info, HttpServletResponse.SC_NOT_FOUND);
             System.out.println("Tracker is null");
         }
     }

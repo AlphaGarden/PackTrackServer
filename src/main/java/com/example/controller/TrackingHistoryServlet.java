@@ -4,12 +4,14 @@ import com.easypost.model.Tracker;
 import com.example.dao.TrackingDao;
 import com.example.helper.RequestParameters;
 import com.example.helper.ResponseHelper;
+import com.example.model.TrackingRecord;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -23,11 +25,20 @@ public class TrackingHistoryServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String userId = req.getParameter(RequestParameters.USERID.toString());
-        List<Tracker> historys = trackingDao.getAllTrackers(userId);
-        if (historys != null){
-            responseHelper.sendResponse(resp, historys);
+        List<Tracker> trackers = trackingDao.getAllTrackers(userId);
+        if (trackers != null){
+            List<TrackingRecord> records = new LinkedList<>();
+            for (Tracker tracker : trackers){
+                records.add(new TrackingRecord(
+                   tracker.getTrackingCode(),
+                   tracker.getCarrier(),
+                   tracker.getUpdatedAt().toString()
+                ));
+            }
+            responseHelper.sendResponse(resp, records, HttpServletResponse.SC_OK);
         }else{
             System.out.println("The history is null");
+
             // TODO to make a rule that when response is null
         }
 
