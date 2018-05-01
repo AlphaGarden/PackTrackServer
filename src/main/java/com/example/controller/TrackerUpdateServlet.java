@@ -74,11 +74,7 @@ public class TrackerUpdateServlet extends HttpServlet {
 
                 // When all mail is ready to be sent
                 executor.shutdown();
-                try {
-                    executor.awaitTermination(30, TimeUnit.SECONDS );
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                executor.awaitTermination(30, TimeUnit.SECONDS );
 
                 ServerInfo info  = new ServerInfo("Update Succeeded");
                 responseHelper.sendResponse(resp, info, HttpServletResponse.SC_OK);
