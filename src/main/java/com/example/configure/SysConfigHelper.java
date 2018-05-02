@@ -100,6 +100,8 @@ public class SysConfigHelper {
         return  10;
     }
 
+    public String getRealtimeUrl(){ return "https://playchat-fe621.firebaseio.com/";}
+
 
 
 }

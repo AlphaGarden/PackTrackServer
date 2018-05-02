@@ -16,7 +16,7 @@ public class RealtimeTest {
         String trackerId1 = "trk_012bsdkfjkashd123";
         String user2 = "user2";
         String trackerId2 = "trk_012bsdkfjkashd111";
-        TrackingDao trackingDao1 = new TrackingDao("https://playchat-fe621.firebaseio.com/");
+        TrackingDao trackingDao1 = new TrackingDao();
         trackingDao1.insert(user1, trackerId1);
         trackingDao1.insert(user1, trackerId2);
         trackingDao1.insert(user2, trackerId2);
@@ -50,6 +50,14 @@ public class RealtimeTest {
         //test getAllTrackers(String userId)
         List<Tracker> list = trackingDao1.getAllTrackers(user1);
 
+        //test getAllUserIdsByTrackerId(String trackerId)
+        List<String> list2 = trackingDao1.getAllUserIdsByTrackerId("trk_012bsdkfjkashd111");
+
+        //test getTrackerIdByTrackingCodeAndCarrier(String trackingCode, String carrier)
+        String trackerId = trackingDao1.getTrackerIdByTrackingCodeAndCarrier("Z0000000001", "Fedex");
+
+        //test getOneTracker(String trackingId)
+        Tracker t = trackingDao1.getOneTracker(trackerId1);
         return;
     }
 }

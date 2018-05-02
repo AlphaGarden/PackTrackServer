@@ -28,20 +28,19 @@ import java.util.*;
  */
 public class TrackingDao implements TrackingDaoInterface {
 
-    String firebase_url;
+    String firebase_url = "https://playchat-fe621.firebaseio.com/";
 
     public static final String FIREBASE_API_JSON_EXTENSION = ".json";
     protected static Logger logger = Logger.getRootLogger();
 
-    public TrackingDao(String url){
-        firebase_url = url;
+    public TrackingDao(){
     }
 
     @Override
     public void insert(String userId, String trackerId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
 
         Map<String, Object> datamap = new LinkedHashMap<>();
-        String key = "trackerId:";
+        String key = "trackerId";
         datamap.put(key, trackerId);
 
         // make the request
@@ -51,11 +50,11 @@ public class TrackingDao implements TrackingDaoInterface {
         this.makeRequest( request );
 
         Map<String, Object> datamap2 = new LinkedHashMap<>();
-        String key2 = "userId:";
+        String key2 = "userId";
         datamap2.put(key2, userId);
 
         // make the request
-        String url2 = this.buildFullUrlFromRelativePath("TrackId/" + trackerId + "/" + userId);
+        String url2 = this.buildFullUrlFromRelativePath("TrackerId/" + trackerId + "/" + userId);
         HttpPut request2 = new HttpPut(url2);
         request2.setEntity(this.buildEntityFromDataMap(datamap2));
         this.makeRequest(request2);
@@ -65,7 +64,7 @@ public class TrackingDao implements TrackingDaoInterface {
     public void insert(String trackingCode, String carrier, String trackerId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
 
         Map<String, Object> datamap = new LinkedHashMap<>();
-        String key = "trackerId:";
+        String key = "trackerId";
         datamap.put(key, trackerId);
 
         // make the request
@@ -79,7 +78,7 @@ public class TrackingDao implements TrackingDaoInterface {
     public void insert(String trackingId, Tracker tracker) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
 
         Map<String, Object> datamap = new LinkedHashMap<>();
-        String key = "tracker_information:";
+        String key = "tracker_information";
         datamap.put(key, tracker);
 
         // make the request
@@ -101,7 +100,7 @@ public class TrackingDao implements TrackingDaoInterface {
     public void updateTrackerByTrackerId(String trackerId, Tracker newTracker) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
 
         Map<String, Object> datamap = new LinkedHashMap<>();
-        String key = "tracker_information:";
+        String key = "tracker_information";
         datamap.put(key, newTracker);
 
         // make the request
@@ -136,10 +135,9 @@ public class TrackingDao implements TrackingDaoInterface {
 
             FirebaseResponse response2 = this.processResponse(FirebaseRestMethod.GET, httpResponse2);
             Map<String, Object> datamap2 = response2.getBody();
-            Tracker tracker = new Tracker();
             JsonConverter converter = JsonConverter.getConverter();
             //tracker = converter.convertFromJsonString(datamap2.get("tracker_information:"), Tracker.class);
-            list.add(converter.convertFromJsonString(converter.convertToJsonStringWithObject(datamap2.get("tracker_information:")), Tracker.class));
+            list.add(converter.convertFromJsonString(converter.convertToJsonStringWithObject(datamap2.get("tracker_information")), Tracker.class));
         }
         return list;
     }
@@ -154,23 +152,62 @@ public class TrackingDao implements TrackingDaoInterface {
         //process the response
         FirebaseResponse response = this.processResponse(FirebaseRestMethod.GET, httpResponse);
         Map<String, Object> datamap = response.getBody();
-        
-        return null;
+        Set<String> string_user = datamap.keySet();
+        List<String> list = new ArrayList<>(string_user.size());
+        String[] array = string_user.toArray(new String[string_user.size()]);
+        for(String s: array){
+            list.add(s);
+        }
+
+        return list;
     }
 
     @Override
-    public List<String> getEmailsByTrackerId(String trackerId) {
-        return null;
+    public List<String> getEmailsByTrackerId(String trackerId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
+        String url = this.buildFullUrlFromRelativePath("TrackerId/" + trackerId);
+        HttpGet request = new HttpGet(url);
+        HttpResponse httpResponse = this.makeRequest(request);
+
+        //process the response
+        FirebaseResponse response = this.processResponse(FirebaseRestMethod.GET, httpResponse);
+        Map<String, Object> datamap = response.getBody();
+        Set<String> string_user = datamap.keySet();
+        List<String> list = new ArrayList<>(string_user.size());
+        String[] array = string_user.toArray(new String[string_user.size()]);
+        for(String s: array){
+            list.add(s);
+        }
+
+        return list;
     }
 
     @Override
-    public String getTrackerIdByTrackingCodeAndCarrier(String trackingCode, String carrier) {
-        return null;
+    public String getTrackerIdByTrackingCodeAndCarrier(String trackingCode, String carrier) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
+
+        String url = this.buildFullUrlFromRelativePath("TrackingCodeToTrackerId/" + trackingCode + "-" + carrier);
+        HttpGet request = new HttpGet(url);
+        HttpResponse httpResponse = this.makeRequest(request);
+
+        //process the response
+        FirebaseResponse response = this.processResponse(FirebaseRestMethod.GET, httpResponse);
+        Map<String, Object> datamap = response.getBody();
+
+        return datamap.get("trackerId").toString();
     }
 
     @Override
-    public Tracker getOneTracker(String trackingId) {
-        return null;
+    public Tracker getOneTracker(String trackingId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
+
+        String url = this.buildFullUrlFromRelativePath("Trackers/" + trackingId);
+        HttpGet request = new HttpGet(url);
+        HttpResponse httpResponse = this.makeRequest(request);
+
+        //process the response
+        FirebaseResponse response = this.processResponse(FirebaseRestMethod.GET, httpResponse);
+        Map<String, Object> datamap = response.getBody();
+        JsonConverter converter = JsonConverter.getConverter();
+        Tracker tracker =  converter.convertFromJsonString(converter.convertToJsonStringWithObject(datamap.get("tracker_information")), Tracker.class);
+        return tracker;
     }
 
 
