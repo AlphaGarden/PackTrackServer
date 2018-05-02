@@ -34,7 +34,7 @@ public class EasyPostDao implements EasyPostDaoInterface{
     public Tracker createTrackerByTrackingCodeAndCarrier(String trackingCode, String carrier) {
         HashMap<String, Object> params = new HashMap<>();
         params.put("tracking_code", trackingCode);
-        params.put("carrier",carrier);
+        params.put("carrier", carrier);
         Tracker tracker = null;
         try {
             tracker = Tracker.create(params);

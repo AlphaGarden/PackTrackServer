@@ -57,6 +57,7 @@ public class TrackerCreateServlet extends HttpServlet {
           ServerInfo info = new ServerInfo("Server Internal error with FireBaseException.");
           responseHelper.sendResponse(resp, info, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       }catch (Exception e){
+          e.printStackTrace();
           ServerInfo info = new ServerInfo("Server Internal error.");
           responseHelper.sendResponse(resp, info, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       }
