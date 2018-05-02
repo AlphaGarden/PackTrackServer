@@ -33,7 +33,7 @@ public class TrackerCreateServlet extends HttpServlet {
           String trackingCode = req.getParameter(RequestParameters.TRACKINGCODE.toString());
           String trackerId = trackingDao.getTrackerIdByTrackingCodeAndCarrier(trackingCode, carrier);
           Tracker tracker;
-          // When the tracker is not created
+          // When the tracking history does not include this tracking user id
           if (trackerId == null){
               // Then we create it
               tracker = easyPostDao.createTrackerByTrackingCodeAndCarrier(trackingCode, carrier);
@@ -45,8 +45,16 @@ public class TrackerCreateServlet extends HttpServlet {
               // save the tracker id and the corresponding tracker into the database
               trackingDao.insert(trackerId, tracker);
           }else{
-              tracker = trackingDao.getOneTracker(trackerId);
+              boolean existed = trackingDao.getAllUserIdsByTrackerId(trackerId).contains(userId);
+              if(existed){
+                  tracker = trackingDao.getOneTracker(trackerId);
+              }else{
+                  tracker = trackingDao.getOneTracker(trackerId);
+                  // save the user id and the corresponding tracker Id into the database
+                  trackingDao.insert(userId, trackerId);
+              }
           }
+
           // return its tracking details.
           responseHelper.sendResponse(resp, tracker, HttpServletResponse.SC_OK);
 
