@@ -15,4 +15,11 @@ public class EasyPostDaoTest {
         easyPostDao = EasyPostDao.getEasyPostDao();
     }
 
+    @Test
+    public void testProductionMode(){
+        String trackingCode = "1Z2R02F3YW15136103";
+        String carrier = "UPS";
+        easyPostDao.createTrackerByTrackingCodeAndCarrier(trackingCode, carrier);
+    }
+
 }
