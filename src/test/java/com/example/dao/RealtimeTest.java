@@ -4,15 +4,16 @@ import com.easypost.model.Tracker;
 import com.example.error.FirebaseException;
 import com.example.error.JacksonUtilityException;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 public class RealtimeTest {
 
-    public static void main(String[] args) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException {
+    public static void main(String[] args) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException, IOException {
 
         //test insert(String userId, String trackerId)
-        String user1 = "user1";
+        String user1 = "guolei1717@gmail";
         String trackerId1 = "trk_012bsdkfjkashd123";
         String user2 = "user2";
         String trackerId2 = "trk_012bsdkfjkashd111";
@@ -45,7 +46,7 @@ public class RealtimeTest {
         //trackingDao1.deleteTrackerById(user1, trackerId1);
 
         //test updateTrackerByTrackerId(String trackerId, Tracker newTracker)
-        trackingDao1.updateTrackerByTrackerId(trackerId1, tracker2);
+        //trackingDao1.updateTrackerByTrackerId(trackerId1, tracker2);
 
         //test getAllTrackers(String userId)
         List<Tracker> list = trackingDao1.getAllTrackers(user1);
@@ -57,7 +58,7 @@ public class RealtimeTest {
         String trackerId = trackingDao1.getTrackerIdByTrackingCodeAndCarrier("Z0000000001", "Fedex");
 
         //test getOneTracker(String trackingId)
-        Tracker t = trackingDao1.getOneTracker(trackerId1);
+        Tracker t = trackingDao1.getOneTracker("trk_309ad737ccaf4baaadac27640efeb418");
         return;
     }
 }
