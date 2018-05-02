@@ -8,6 +8,7 @@ import com.example.model.EasyTracker;
 import com.example.model.FirebaseResponse;
 import com.example.model.PacTrackUser;
 import com.example.util.JacksonUtility;
+import com.google.api.client.json.Json;
 import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,7 +19,6 @@ import org.apache.http.client.methods.*;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.log4j.Logger;
-import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.*;
 import java.util.*;
@@ -29,7 +29,7 @@ import java.util.*;
  */
 public class TrackingDao implements TrackingDaoInterface {
 
-    String firebase_url = "https://playchat-fe621.firebaseio.com";
+    String firebase_url = "https://playchat-fe621.firebaseio.com/";
 
     public static final String FIREBASE_API_JSON_EXTENSION = ".json";
     protected static Logger logger = Logger.getRootLogger();
@@ -80,8 +80,8 @@ public class TrackingDao implements TrackingDaoInterface {
 
         Map<String, Object> datamap = new LinkedHashMap<>();
         String key = "tracker_information";
-        datamap.put(key, tracker);
-
+        JsonConverter converter = JsonConverter.getConverter();
+        datamap.put(key, converter.convertToJsonStringWithObject(tracker));
         // make the request
         String url = this.buildFullUrlFromRelativePath("Trackers/" + trackingId);
         HttpPut request = new HttpPut( url );
@@ -193,11 +193,12 @@ public class TrackingDao implements TrackingDaoInterface {
         FirebaseResponse response = this.processResponse(FirebaseRestMethod.GET, httpResponse);
         Map<String, Object> datamap = response.getBody();
 
-        return datamap.get("trackerId").toString();
+        Object result = datamap.get("trackerId");
+        return result == null ? null : result.toString();
     }
 
     @Override
-    public Tracker getOneTracker(String trackingId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException, IOException{
+    public Tracker getOneTracker(String trackingId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
 
         String url = this.buildFullUrlFromRelativePath("Trackers/" + trackingId);
         HttpGet request = new HttpGet(url);
@@ -207,8 +208,7 @@ public class TrackingDao implements TrackingDaoInterface {
         FirebaseResponse response = this.processResponse(FirebaseRestMethod.GET, httpResponse);
         Map<String, Object> datamap = response.getBody();
         JsonConverter converter = JsonConverter.getConverter();
-        //Tracker tracker =  converter.convertFromJsonString(converter.convertToJsonStringWithObject(datamap.get("tracker_information")), Tracker.class);
-        Tracker tracker = new ObjectMapper().readValue(converter.convertToJsonStringWithObject(datamap.get("tracker_information")), Tracker.class);
+        Tracker tracker =  converter.convertFromJsonString((String)datamap.get("tracker_information"), Tracker.class);
         return tracker;
     }
 
@@ -241,7 +241,7 @@ public class TrackingDao implements TrackingDaoInterface {
         return response;
     }
 
-    private StringEntity buildEntityFromDataMap(Map<String, Object> dataMap ) throws FirebaseException, JacksonUtilityException {
+    private StringEntity buildEntityFromDataMap( Map<String, Object> dataMap ) throws FirebaseException, JacksonUtilityException {
 
         String jsonData = JacksonUtility.GET_JSON_STRING_FROM_MAP( dataMap );
 
