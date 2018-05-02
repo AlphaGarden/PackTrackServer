@@ -4,6 +4,7 @@ import com.easypost.model.Tracker;
 import com.example.error.FirebaseException;
 import com.example.error.JacksonUtilityException;
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 
@@ -95,6 +96,6 @@ public interface TrackingDaoInterface {
      * @param trackingId The tracking id like "trk_012bsdkfjkashd123"
      * @return The specific Tracker  its tracker id.
      */
-    Tracker getOneTracker(String trackingId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException;
+    Tracker getOneTracker(String trackingId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException, IOException;
 
 }
