@@ -32,18 +32,26 @@ public class TrackerCreateServlet extends HttpServlet {
           String carrier = req.getParameter(RequestParameters.CARRIER.toString());
           String trackingCode = req.getParameter(RequestParameters.TRACKINGCODE.toString());
           String trackerId = trackingDao.getTrackerIdByTrackingCodeAndCarrier(trackingCode, carrier);
+          boolean existed = trackingDao.getAllUserIdsByTrackerId(trackerId).contains(userId);
           Tracker tracker;
-          // When the tracker is not created
-          if (trackerId == null){
-              // Then we create it
-              tracker = easyPostDao.createTrackerByTrackingCodeAndCarrier(trackingCode, carrier);
-              trackerId = tracker.getId();
-              // save the user id and the corresponding tracker Id into the database
-              trackingDao.insert(userId, trackerId);
-              // save tracking code, carrier and corresponding tracker id into the database
-              trackingDao.insert(trackingCode, carrier, trackerId);
-              // save the tracker id and the corresponding tracker into the database
-              trackingDao.insert(trackerId, tracker);
+          // When the tracking history does not include this tracking user id
+          if ( !existed){
+              // check if this is a new tracker
+              if(trackerId == null){
+                  // Then we create it
+                  tracker = easyPostDao.createTrackerByTrackingCodeAndCarrier(trackingCode, carrier);
+                  trackerId = tracker.getId();
+                  // save the user id and the corresponding tracker Id into the database
+                  trackingDao.insert(userId, trackerId);
+                  // save tracking code, carrier and corresponding tracker id into the database
+                  trackingDao.insert(trackingCode, carrier, trackerId);
+                  // save the tracker id and the corresponding tracker into the database
+                  trackingDao.insert(trackerId, tracker);
+              }else{
+                  tracker = trackingDao.getOneTracker(trackerId);
+                  // save the user id and the corresponding tracker Id into the database
+                  trackingDao.insert(userId, trackerId);
+              }
           }else{
               tracker = trackingDao.getOneTracker(trackerId);
           }
