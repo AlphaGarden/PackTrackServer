@@ -67,7 +67,6 @@ public class MailHelper {
             message.setContent(mail.getContent(),"text/html; charset=utf-8");
             message.saveChanges();
             Transport transport = session.getTransport("smtp");
-            System.out.println("Try to connect the host!");
             transport.connect(SMTP_HOST, USER_NAME, PASS_WORD);
             transport.sendMessage(message, message.getAllRecipients());
             transport.close();
@@ -75,6 +74,7 @@ public class MailHelper {
         } catch (MessagingException e) {
             e.printStackTrace();
         }
+
 
     }
     public static void main(String[] args){

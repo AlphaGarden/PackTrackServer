@@ -6,7 +6,6 @@ import com.example.dao.TrackingDao;
 import com.example.helper.RequestParameters;
 import com.example.helper.ResponseHelper;
 import com.example.model.ServerInfo;
-import io.grpc.Server;
 
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +17,7 @@ import java.io.IOException;
  * @author garden
  * @create 4/24/18
  */
+
 @WebServlet(name = "createTracking", value = "/create")
 public class TrackerCreateServlet extends HttpServlet {
     private static EasyPostDao easyPostDao = EasyPostDao.getEasyPostDao();
@@ -46,7 +46,7 @@ public class TrackerCreateServlet extends HttpServlet {
               tracker = trackingDao.getOneTracker(trackerId);
           }
           // return its tracking details.
-          responseHelper.sendResponse(resp, tracker.getTrackingDetails(), HttpServletResponse.SC_OK);
+          responseHelper.sendResponse(resp, tracker, HttpServletResponse.SC_OK);
 
       }catch (Exception e){
           ServerInfo info = new ServerInfo("Servlet Internal Error.");

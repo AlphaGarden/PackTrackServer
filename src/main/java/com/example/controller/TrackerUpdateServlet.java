@@ -48,11 +48,19 @@ public class TrackerUpdateServlet extends HttpServlet {
         try{
             Event event = converter.convertFromJsonInputStrem(req.getInputStream(), Event.class);
             Tracker tracker = (Tracker)event.getResult();
-            if (tracker != null){
+            List<TrackingDetail> trackingDetails = tracker.getTrackingDetails();
+            TrackingDetail newDetail = trackingDetails.get(trackingDetails.size() - 1);
+            TrackingLocation location = newDetail.getTrackingLocation();
+            if (tracker != null && location !=null){
                 String trackerId = tracker.getId();
                 trackingDao.updateTrackerByTrackerId(trackerId, tracker);
                 List<String> userIds = trackingDao.getAllUserIdsByTrackerId(trackerId);
                 List<String> userEmails = trackingDao.getEmailsByTrackerId(trackerId);
+                String trackingCode = tracker.getTrackingCode();
+                String carrier = tracker.getCarrier();
+                String updateAt = newDetail.getDatetime().toString();
+                String locationInfo = location.getCity() + "," + location.getState() + " "+ location.getCountry();
+                String status = newDetail.getMessage();
                 // TODO Implement with multi-thread
 
                 for(String userId : userIds){
@@ -67,7 +75,13 @@ public class TrackerUpdateServlet extends HttpServlet {
                 executor = Executors.newFixedThreadPool(sysConfigHelper.getThreadPoolSize());
                 for(String email : userEmails){
                     //  Send email to every user
-                    EasyMail easyMail = new EasyMail(null,"Test from update", "<h1>Hello world</h1>");
+                    EasyMail easyMail = new EasyMail(null,
+                            "Update for: "+trackingCode,
+                            trackingCode,
+                            carrier,
+                            updateAt,
+                            locationInfo,
+                            status);
                     easyMail.setReceiptant(email);
                     executor.execute(mailHelper.createSendThread(easyMail));
                 }

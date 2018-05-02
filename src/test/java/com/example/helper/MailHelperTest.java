@@ -28,11 +28,11 @@ public class MailHelperTest {
         List<String> emailList = new LinkedList<>();
         emailList.add("1419286710@qq.com");
         emailList.add("313016129@qq.com");
-        String content = "<img src='http://cdn3.bigcommerce.com/s-ad4o86f/products/20068/images/71341/vita_lemon_tea_250ml_2__79194.1448275455.1280.1280.jpg?c=2'/>";
+        String content ="";
 
         executorService = Executors.newFixedThreadPool(10);
-        for(int i = 0; i <20; i++ ){
-            EasyMail easyMail = new EasyMail("unknown","送你一瓶柠檬茶", content);
+        for(int i = 0; i <1; i++ ){
+            EasyMail easyMail = new EasyMail("unknown","送你一瓶柠檬茶", "","","","","");
             String receiptant = emailList.get(i%emailList.size());
             System.out.println("Send notification email to "+receiptant);
             easyMail.setReceiptant(receiptant);
