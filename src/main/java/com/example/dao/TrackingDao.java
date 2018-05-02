@@ -96,7 +96,7 @@ public class TrackingDao implements TrackingDaoInterface {
         HttpDelete request = new HttpDelete(url);
         this.makeRequest(request);
 
-        String url2 = this.buildFullUrlFromRelativePath("TrackerId" + trackerId + "/" + userId);
+        String url2 = this.buildFullUrlFromRelativePath("TrackerId/" + trackerId + "/" + userId);
         HttpDelete request2 = new HttpDelete(url2);
         this.makeRequest(request2);
     }
