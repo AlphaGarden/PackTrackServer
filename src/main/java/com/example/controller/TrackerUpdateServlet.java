@@ -56,7 +56,6 @@ public class TrackerUpdateServlet extends HttpServlet {
             if (tracker != null && location !=null){
                 String trackerId = tracker.getId();
                 trackingDao.updateTrackerByTrackerId(trackerId, tracker);
-                List<String> userIds = trackingDao.getAllUserIdsByTrackerId(trackerId);
                 List<String> userEmails = trackingDao.getEmailsByTrackerId(trackerId);
                 String trackingCode = tracker.getTrackingCode();
                 String carrier = tracker.getCarrier();
@@ -65,13 +64,17 @@ public class TrackerUpdateServlet extends HttpServlet {
                 String status = newDetail.getMessage();
                 // TODO Implement with multi-thread
 
-                for(String userId : userIds){
-                    CloudMessage message = CloudMessage.builder()
-                            .withToClient(userId)
-                            .withTracker(tracker)
-                            .build();
-                    cloudMessageDao.send(message);
-                }
+                CloudMessage message = CloudMessage.builder()
+                        .withToClient(trackerId)
+                        .build();
+                cloudMessageDao.send(message);
+//                for(String userId : userIds){
+//                    CloudMessage message = CloudMessage.builder()
+//                            .withToClient(userId)
+//                            .withTracker(tracker)
+//                            .build();
+//                    cloudMessageDao.send(message);
+//                }
 
                 //  Implementation of sending email with multi-thread and thread pool
                 executor = Executors.newFixedThreadPool(sysConfigHelper.getThreadPoolSize());
