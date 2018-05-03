@@ -40,6 +40,17 @@ public class TrackingDao implements TrackingDaoInterface {
     @Override
     public void insert(String userId, String trackerId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
 
+        //	  public static long longHash(String string) {
+        //	    long h = 98764321261L;
+        //	    int l = string.length();
+        //	    char[] chars = string.toCharArray();
+        //
+        //	    for (int i = 0; i < l; i++) {
+        //	      h = 31*h + chars[i];
+        //	    }
+        //	    return h;
+        //	  }
+
         Map<String, Object> datamap = new LinkedHashMap<>();
         String key = "trackerId";
         datamap.put(key, trackerId);
@@ -134,15 +145,17 @@ public class TrackingDao implements TrackingDaoInterface {
         String[] s = string_codes.toArray(new String[string_codes.size()]);
 
         for(int i = 0; i < string_codes.size(); i++){
-            String url_tracker = this.buildFullUrlFromRelativePath("Trackers/" + s[i]);
-            HttpGet request2 = new HttpGet(url_tracker);
-            HttpResponse httpResponse2 = this.makeRequest(request2);
-
-            FirebaseResponse response2 = this.processResponse(FirebaseRestMethod.GET, httpResponse2);
-            Map<String, Object> datamap2 = response2.getBody();
-            JsonConverter converter = JsonConverter.getConverter();
-            //tracker = converter.convertFromJsonString(datamap2.get("tracker_information:"), Tracker.class);
-            list.add(converter.convertFromJsonString(converter.convertToJsonStringWithObject(datamap2.get("tracker_information")), Tracker.class));
+//            String url_tracker = this.buildFullUrlFromRelativePath("Trackers/" + s[i]);
+//            HttpGet request2 = new HttpGet(url_tracker);
+//            HttpResponse httpResponse2 = this.makeRequest(request2);
+//
+//            FirebaseResponse response2 = this.processResponse(FirebaseRestMethod.GET, httpResponse2);
+//            Map<String, Object> datamap2 = response2.getBody();
+//            JsonConverter converter = JsonConverter.getConverter();
+//            //tracker = converter.convertFromJsonString(datamap2.get("tracker_information:"), Tracker.class);
+//            list.add(converter.convertFromJsonString(converter.convertToJsonStringWithObject(datamap2.get("tracker_information")), Tracker.class));
+            Tracker tracker = getOneTracker(s[i]);
+            list.add(tracker);
         }
         return list;
     }
