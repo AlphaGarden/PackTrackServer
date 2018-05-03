@@ -40,23 +40,21 @@ public class TrackingDao implements TrackingDaoInterface {
     @Override
     public void insert(String userId, String trackerId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
 
-        //	  public static long longHash(String string) {
-        //	    long h = 98764321261L;
-        //	    int l = string.length();
-        //	    char[] chars = string.toCharArray();
-        //
-        //	    for (int i = 0; i < l; i++) {
-        //	      h = 31*h + chars[i];
-        //	    }
-        //	    return h;
-        //	  }
+        //build user_code
+        String user_code = this.longHash(userId);
+        String url_code = this.buildFullUrlFromRelativePath("UserCode");
+        Map<String, Object> datamap_userCode = new LinkedHashMap<>();
+        datamap_userCode.put(user_code, userId);
+        HttpPut request_code = new HttpPut(url_code);
+        request_code.setEntity(this.buildEntityFromDataMap(datamap_userCode));
+        this.makeRequest(request_code);
 
         Map<String, Object> datamap = new LinkedHashMap<>();
         String key = "trackerId";
         datamap.put(key, trackerId);
 
         // make the request
-        String url = this.buildFullUrlFromRelativePath("User/" + userId + "/" + trackerId);
+        String url = this.buildFullUrlFromRelativePath("User/" + user_code + "/" + trackerId);
         HttpPut request = new HttpPut( url );
         request.setEntity( this.buildEntityFromDataMap(datamap) );
         this.makeRequest( request );
@@ -66,7 +64,7 @@ public class TrackingDao implements TrackingDaoInterface {
         datamap2.put(key2, userId);
 
         // make the request
-        String url2 = this.buildFullUrlFromRelativePath("TrackerId/" + trackerId + "/" + userId);
+        String url2 = this.buildFullUrlFromRelativePath("TrackerId/" + trackerId + "/" + user_code);
         HttpPut request2 = new HttpPut(url2);
         request2.setEntity(this.buildEntityFromDataMap(datamap2));
         this.makeRequest(request2);
@@ -103,11 +101,13 @@ public class TrackingDao implements TrackingDaoInterface {
     @Override
     public void deleteTrackerById(String userId, String trackerId) throws FirebaseException, UnsupportedEncodingException{
 
-        String url = this.buildFullUrlFromRelativePath("User/" + userId + "/" + trackerId);
+        String user_code = this.longHash(userId);
+
+        String url = this.buildFullUrlFromRelativePath("User/" + user_code + "/" + trackerId);
         HttpDelete request = new HttpDelete(url);
         this.makeRequest(request);
 
-        String url2 = this.buildFullUrlFromRelativePath("TrackerId/" + trackerId + "/" + userId);
+        String url2 = this.buildFullUrlFromRelativePath("TrackerId/" + trackerId + "/" + user_code);
         HttpDelete request2 = new HttpDelete(url2);
         this.makeRequest(request2);
     }
@@ -129,6 +129,8 @@ public class TrackingDao implements TrackingDaoInterface {
     @Override
     public List<Tracker> getAllTrackers(String userId) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException{
 
+        String user_code = this.longHash(userId);
+
         List<Tracker> list = new ArrayList<>();
         //make the request
         String url = this.buildFullUrlFromRelativePath("User");
@@ -140,7 +142,7 @@ public class TrackingDao implements TrackingDaoInterface {
 
         // get the map from json
         Map<String, Object> datamap = response.getBody();
-        Map<String, Object> tracking_codes = (Map<String, Object>) datamap.get(userId);
+        Map<String, Object> tracking_codes = (Map<String, Object>) datamap.get(user_code);
         Set<String> string_codes = tracking_codes.keySet();
         String[] s = string_codes.toArray(new String[string_codes.size()]);
 
@@ -174,7 +176,13 @@ public class TrackingDao implements TrackingDaoInterface {
         List<String> list = new ArrayList<>(string_user.size());
         String[] array = string_user.toArray(new String[string_user.size()]);
         for(String s: array){
-            list.add(s);
+            String url2 = this.buildFullUrlFromRelativePath("UserCode");
+            HttpGet r = new HttpGet(url2);
+            HttpResponse hr = this.makeRequest(r);
+
+            FirebaseResponse response2 = this.processResponse(FirebaseRestMethod.GET, hr);
+            Map<String, Object> map = response2.getBody();
+            list.add(map.get(s).toString());
         }
 
         return list;
@@ -193,7 +201,14 @@ public class TrackingDao implements TrackingDaoInterface {
         List<String> list = new ArrayList<>(string_user.size());
         String[] array = string_user.toArray(new String[string_user.size()]);
         for(String s: array){
-            list.add(s);
+            String url2 = this.buildFullUrlFromRelativePath("UserCode");
+            HttpGet r = new HttpGet(url2);
+            HttpResponse hr = this.makeRequest(r);
+
+            FirebaseResponse response2 = this.processResponse(FirebaseRestMethod.GET, hr);
+            Map<String, Object> map = response2.getBody();
+            list.add(map.get(s).toString());
+            //list.add(s);
         }
 
         return list;
@@ -409,4 +424,15 @@ public class TrackingDao implements TrackingDaoInterface {
         POST,
         DELETE;
     }
+
+    public String longHash(String string) {
+        long h = 98764321261L;
+        int l = string.length();
+        char[] chars = string.toCharArray();
+
+        for (int i = 0; i < l; i++) {
+          h = 31*h + chars[i];
+        }
+        return Long.toString(h);
+      }
 }
