@@ -38,7 +38,7 @@ public class TrackingDao implements TrackingDaoInterface {
         String user_code = this.longHash(userId);
         String url_code = this.buildFullUrlFromRelativePath("UserCode/" + user_code);
         Map<String, Object> datamap_userCode = new LinkedHashMap<>();
-        datamap_userCode.put("user_code", userId);
+        datamap_userCode.put("e-mail", userId);
         HttpPut request_code = new HttpPut(url_code);
         request_code.setEntity(this.buildEntityFromDataMap(datamap_userCode));
         this.makeRequest(request_code);
@@ -177,7 +177,7 @@ public class TrackingDao implements TrackingDaoInterface {
 
             FirebaseResponse response2 = this.processResponse(FirebaseRestMethod.GET, hr);
             Map<String, Object> map = response2.getBody();
-            list.add(map.get("user_code").toString());
+            list.add(map.get("e-mail").toString());
         }
 
         return list;
@@ -203,7 +203,7 @@ public class TrackingDao implements TrackingDaoInterface {
 
             FirebaseResponse response2 = this.processResponse(FirebaseRestMethod.GET, hr);
             Map<String, Object> map = response2.getBody();
-            list.add(map.get("user_code").toString());
+            list.add(map.get("e-mail").toString());
             //list.add(s);
         }
 
