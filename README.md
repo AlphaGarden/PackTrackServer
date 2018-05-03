@@ -312,7 +312,7 @@
 
 ------
 
-**Rerturn the tracking history by the tracking code and carrier**
+**Return the specific tracking detail by the tracking code and carrier**
 
 - **Url:** `/query`
 
@@ -321,8 +321,6 @@
 - **URL Params** 
 
   **Required**:
-
-  `USERID` = [String]
 
   `CARRIER` = [String]
 
