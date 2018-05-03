@@ -78,7 +78,7 @@ public class TrackerUpdateServlet extends HttpServlet {
                 for(String email : userEmails){
                     //  Send email to every user
                     EasyMail easyMail = new EasyMail(null,
-                            "Update for: "+trackingCode,
+                            "PacTack-Update for: "+trackingCode,
                             trackingCode,
                             carrier,
                             updateAt,
