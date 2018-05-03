@@ -36,9 +36,9 @@ public class TrackingDao implements TrackingDaoInterface {
 
         //build user_code
         String user_code = this.longHash(userId);
-        String url_code = this.buildFullUrlFromRelativePath("UserCode");
+        String url_code = this.buildFullUrlFromRelativePath("UserCode/" + user_code);
         Map<String, Object> datamap_userCode = new LinkedHashMap<>();
-        datamap_userCode.put(user_code, userId);
+        datamap_userCode.put("user_code", userId);
         HttpPut request_code = new HttpPut(url_code);
         request_code.setEntity(this.buildEntityFromDataMap(datamap_userCode));
         this.makeRequest(request_code);
@@ -171,13 +171,13 @@ public class TrackingDao implements TrackingDaoInterface {
         List<String> list = new ArrayList<>(string_user.size());
         String[] array = string_user.toArray(new String[string_user.size()]);
         for(String s: array){
-            String url2 = this.buildFullUrlFromRelativePath("UserCode");
+            String url2 = this.buildFullUrlFromRelativePath("UserCode/" + s);
             HttpGet r = new HttpGet(url2);
             HttpResponse hr = this.makeRequest(r);
 
             FirebaseResponse response2 = this.processResponse(FirebaseRestMethod.GET, hr);
             Map<String, Object> map = response2.getBody();
-            list.add(map.get(s).toString());
+            list.add(map.get("user_code").toString());
         }
 
         return list;
@@ -197,13 +197,13 @@ public class TrackingDao implements TrackingDaoInterface {
         List<String> list = new ArrayList<>(string_user.size());
         String[] array = string_user.toArray(new String[string_user.size()]);
         for(String s: array){
-            String url2 = this.buildFullUrlFromRelativePath("UserCode");
+            String url2 = this.buildFullUrlFromRelativePath("UserCode/" + s);
             HttpGet r = new HttpGet(url2);
             HttpResponse hr = this.makeRequest(r);
 
             FirebaseResponse response2 = this.processResponse(FirebaseRestMethod.GET, hr);
             Map<String, Object> map = response2.getBody();
-            list.add(map.get(s).toString());
+            list.add(map.get("user_code").toString());
             //list.add(s);
         }
 
