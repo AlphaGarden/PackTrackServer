@@ -117,7 +117,8 @@ public class TrackingDao implements TrackingDaoInterface {
 
         Map<String, Object> datamap = new LinkedHashMap<>();
         String key = "tracker_information";
-        datamap.put(key, newTracker);
+        JsonConverter converter = JsonConverter.getConverter();
+        datamap.put(key, converter.convertToJsonStringWithObject(newTracker));
 
         // make the request
         String url = this.buildFullUrlFromRelativePath("Trackers/" + trackerId);
@@ -197,6 +198,7 @@ public class TrackingDao implements TrackingDaoInterface {
         //process the response
         FirebaseResponse response = this.processResponse(FirebaseRestMethod.GET, httpResponse);
         Map<String, Object> datamap = response.getBody();
+        if(datamap == null) return  null;
         Set<String> string_user = datamap.keySet();
         List<String> list = new ArrayList<>(string_user.size());
         String[] array = string_user.toArray(new String[string_user.size()]);

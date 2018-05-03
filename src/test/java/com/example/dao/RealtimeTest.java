@@ -13,7 +13,7 @@ public class RealtimeTest {
     public static void main(String[] args) throws JacksonUtilityException, FirebaseException, UnsupportedEncodingException, IOException {
 
         //test insert(String userId, String trackerId)
-        String user1 = "guolei1717@gmail";
+        String user1 = "user1";
         String trackerId1 = "trk_012bsdkfjkashd123";
         String user2 = "user2";
         String trackerId2 = "trk_012bsdkfjkashd111";
