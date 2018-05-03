@@ -40,6 +40,9 @@ public class TrackingHistoryServlet extends HttpServlet {
                    ));
                }
                responseHelper.sendResponse(resp, records, HttpServletResponse.SC_OK);
+           }else{
+               ServerInfo info = new ServerInfo("Can't find the trackers by user Id"+ userId);
+               responseHelper.sendResponse(resp, info, HttpServletResponse.SC_NOT_FOUND);
            }
        }catch (JacksonUtilityException e){
            ServerInfo info = new ServerInfo("Server Internal error with JacksonUtilityException.");
@@ -49,6 +52,7 @@ public class TrackingHistoryServlet extends HttpServlet {
            responseHelper.sendResponse(resp, info, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
        }catch (Exception e){
            ServerInfo info = new ServerInfo("Servlet Internal Error.");
+           responseHelper.sendResponse(resp, info, HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
        }
 
     }
